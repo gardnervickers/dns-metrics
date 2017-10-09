@@ -5,4 +5,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.soundcloud/prometheus-clj "2.4.1"]
-                 [ring "1.6.2"]])
+                 [ring-server "0.5.0"]
+                 [com.taoensso/timbre "4.10.0"]])
