@@ -1,9 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: "dns-metrics.{{ .Release.Name }}"
   labels:
-    app: {{ template "name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -13,12 +12,16 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
         release: {{ .Release.Name }}
         component: "{{ printf "%s-dns-metrics" .Release.Name | trunc 24 }}"
     spec:
       containers:
         - name: {{ .Chart.Name }}
+          args:
+            - www.google.com
+            - s3-us-west-2.amazonaws.com
+            - kf-us-west-2
+            - kf-us-west-2-0.kf-broker-us-west-2
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

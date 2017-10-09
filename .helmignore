@@ -19,3 +19,10 @@
 .project
 .idea/
 *.tmproj
+src/
+test/
+doc/
+project.clj
+resources/
+Dockerfile
+target/
