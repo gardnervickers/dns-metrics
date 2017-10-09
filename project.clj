@@ -6,4 +6,6 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.soundcloud/prometheus-clj "2.4.1"]
                  [ring-server "0.5.0"]
-                 [com.taoensso/timbre "4.10.0"]])
+                 [com.taoensso/timbre "4.10.0"]]
+  :uberjar-name "dns-metrics.jar"
+  :main dns-metrics.core)

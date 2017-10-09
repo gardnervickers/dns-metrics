@@ -18,16 +18,19 @@
   ([store url]
    (increase-error-count store url 1))
   ([store url ammount]
-   (prometheus/increase-counter store "dns_failure_metrics" "dns_failures"
+   (prometheus/increase-counter store "dns_metrics" "dns_failures"
                                 [(clojure.string/replace url #"\." "_")] ammount)))
 
 (defn -main [& args]
+  (timbre/info "Starting monitoring for: " args)
   (let [store (register-url-metric (prometheus/init-defaults))]
+    (doseq [addr args]
+      (timbre/info "Initializing counter for: " addr)
+      (increase-error-count store addr 0))
     (future
-      (doseq [addr args]
-        (increase-error-count store addr 0))
       (while true
         (doseq [addr args]
+          (timbre/info "Checking DNS resolution for: " addr)
           (when-not (try
                       (not (clojure.string/blank? (lookup addr)))
                       (catch java.net.UnknownHostException e false))
