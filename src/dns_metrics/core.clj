@@ -40,6 +40,7 @@
      (prometheus/instrument-handler (fn [_]
                                       (prometheus/dump-metrics (:registry store)))
                                     "dns_error_metrics"
-                                    (:registry store)))))
+                                    (:registry store))
+     {:open-browser? false})))
 
 ;;(-main "foobar" "www.google.com" "localhost" "localhow")
