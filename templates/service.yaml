@@ -7,6 +7,7 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    component: "{{ printf "%s-dns-metrics" .Release.Name | trunc 24 }}"
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,5 +16,4 @@ spec:
       protocol: TCP
       name: {{ .Values.service.name }}
   selector:
-    app: {{ template "name" . }}
-    release: {{ .Release.Name }}
+    component: "{{ printf "%s-dns-metrics" .Release.Name | trunc 24 }}"

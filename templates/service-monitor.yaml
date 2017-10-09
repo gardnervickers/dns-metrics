@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: "{{ printf "%s-pyroclast-peer" .Release.Name | trunc 24 }}"
+spec:
+  jobLabel: "dns-monitor"
+  selector:
+    matchLabels:
+      component: "{{ printf "%s-pyroclast-peer" .Release.Name | trunc 24 }}"
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+  - port: dns-metrics
+    interval: 15s
+    scheme: http
